@@ -131,8 +131,9 @@ class PlotVariables
     end
   end
 
-  def get_samples(variable)
-    samples = node['mysql_tuning']['configuration_samples']
+  def get_samples(variable)    
+    type = node['mysql_tuning']['type']
+    samples = node['mysql_tuning']['configuration_samples'][type]
     samples.each_with_object({}) do |(mem, sample), r|
       next unless sample.key?('mysqld')
       next unless sample['mysqld'].key?(variable)

@@ -46,7 +46,8 @@ class FakeRecipe < ::Chef::Node
 
   def cnf_samples(value = nil)
     if value.nil?
-      node['mysql_tuning']['configuration_samples']
+     type = node['mysql_tuning']['type']
+      node['mysql_tuning']['configuration_samples'][type]     
     else
       node.default['mysql_tuning']['configuration_samples'] = value
     end

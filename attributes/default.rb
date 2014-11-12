@@ -25,6 +25,7 @@ default['mysql_tuning']['system_percentage'] = 100
 default['mysql_tuning']['dynamic_configuration'] = false
 default['mysql_tuning']['interpolation'] = 'proximal'
 default['mysql_tuning']['recipe'] = nil
+default['mysql_tuning']['type'] = 'balanced'
 
 default['mysql_tuning']['interpolation_by_variable'] = {}
 

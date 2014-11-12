@@ -22,7 +22,7 @@
 self.class.send(:include, ::MysqlTuning::CookbookHelpers)
 
 # 45M <= RAM <= 64M (small)
-default['mysql_tuning']['configuration_samples'][45 * MB] = {
+default['mysql_tuning']['configuration_samples']['balanced'][45 * MB] = {
   mysqld: {
     key_buffer_size: '16K',
     table_open_cache: 4,
@@ -56,7 +56,7 @@ default['mysql_tuning']['configuration_samples'][45 * MB] = {
 }
 
 # 64M < RAM < 512M (medium)
-default['mysql_tuning']['configuration_samples'][64 * MB] = {
+default['mysql_tuning']['configuration_samples']['balanced'][64 * MB] = {
   mysqld: {
     key_buffer_size: '16M',
     table_open_cache: 64,
@@ -74,7 +74,7 @@ default['mysql_tuning']['configuration_samples'][64 * MB] = {
 }
 
 # 512M < RAM < 1G (large)
-default['mysql_tuning']['configuration_samples'][512 * MB] = {
+default['mysql_tuning']['configuration_samples']['balanced'][512 * MB] = {
   mysqld: {
     key_buffer_size: '256M',
     table_open_cache: 256,
@@ -96,7 +96,7 @@ default['mysql_tuning']['configuration_samples'][512 * MB] = {
 
 # 1G <= RAM < 4G (huge)
 # TODO: ibdata value ?
-default['mysql_tuning']['configuration_samples'][1 * GB] = {
+default['mysql_tuning']['configuration_samples']['balanced'][1 * GB] = {
   mysqld: {
     key_buffer_size: '384M',
     table_open_cache: 512,
@@ -114,7 +114,7 @@ default['mysql_tuning']['configuration_samples'][1 * GB] = {
 }
 
 # 4G <= RAM (heavy)
-default['mysql_tuning']['configuration_samples'][4 * GB] = {
+default['mysql_tuning']['configuration_samples']['balanced'][4 * GB] = {
   mysqld: {
     key_buffer_size: '512M',
     max_allowed_packet: '16M',
@@ -139,7 +139,7 @@ default['mysql_tuning']['configuration_samples'][4 * GB] = {
     innodb_read_io_threads: 8,
     # :innodb_thread_concurrency: 16,
     innodb_max_dirty_pages_pct: 90,
-    max_connections: 100,
+    max_connections: 256,
     max_connect_errors: 10,
     max_heap_table_size: '64M',
     tmp_table_size: '64M'
@@ -147,8 +147,88 @@ default['mysql_tuning']['configuration_samples'][4 * GB] = {
   myisamchk: {
     key_buffer_size: '512M',
     sort_buffer_size: '512M',
-    sort_buffer_size: '8M',
     write_buffer: '8M'
+  },
+  mysqld_safe: {
+    'open-files-limit' => 8192
+  }
+}  
+  # 8G = RAM
+default['mysql_tuning']['configuration_samples']['balanced'][8 * GB] = {
+  mysqld: {
+    key_buffer_size: '1024M',
+    max_allowed_packet: '32M',
+    table_open_cache: 4096,
+    sort_buffer_size: '8M',
+    read_rnd_buffer_size: '16M',
+    join_buffer_size: '12M',
+    myisam_sort_buffer_size: '128M',
+    bulk_insert_buffer_size: '64M',
+    myisam_max_sort_file_size: '10G',
+    thread_stack: '192K',
+    query_cache_size: '128M',
+    query_cache_limit: '2M',
+    binlog_cache_size: '1M',
+    innodb_buffer_pool_size: '4G',
+    innodb_additional_mem_pool_size: '32M',
+    # innodb_log_file_size: '256M',
+    innodb_log_buffer_size: '16M',
+    innodb_log_files_in_group: 3,
+    innodb_lock_wait_timeout: 120,
+    innodb_write_io_threads: 16,
+    innodb_read_io_threads: 16,
+    # :innodb_thread_concurrency: 16,
+    innodb_max_dirty_pages_pct: 90,
+    max_connections: 512,
+    max_connect_errors: 10,
+    max_heap_table_size: '128M',
+    tmp_table_size: '128M'
+  },
+  myisamchk: {
+    key_buffer_size: '1024M',
+    sort_buffer_size: '1024M',
+    write_buffer: '16M'
+  },
+  mysqld_safe: {
+    'open-files-limit' => 8192
+  }
+}
+
+ # 16G = RAM
+default['mysql_tuning']['configuration_samples']['balanced'][16 * GB] = {
+  mysqld: {
+    key_buffer_size: '2048M',
+    max_allowed_packet: '32M',
+    table_open_cache: 8192,
+    sort_buffer_size: '16M',
+    read_rnd_buffer_size: '32M',
+    join_buffer_size: '16M',
+    myisam_sort_buffer_size: '196M',
+    bulk_insert_buffer_size: '64M',
+    myisam_max_sort_file_size: '10G',
+    thread_stack: '192K',
+    query_cache_size: '256M',
+    query_cache_limit: '2M',
+    binlog_cache_size: '1M',
+    innodb_buffer_pool_size: '8G',
+    innodb_additional_mem_pool_size: '64M',
+    # innodb_log_file_size: '256M',
+    innodb_log_buffer_size: '32M',
+    innodb_log_files_in_group: 3,
+    innodb_lock_wait_timeout: 120,
+    innodb_write_io_threads: 16,
+    innodb_read_io_threads: 16,
+    # :innodb_thread_concurrency: 16,
+    innodb_max_dirty_pages_pct: 90,
+    max_connections: 1024,
+    max_connect_errors: 10,
+    max_heap_table_size: '256M',
+    tmp_table_size: '256M'
+  },
+  myisamchk: {
+    key_buffer_size: '2048M',
+    sort_buffer_size: '2048M',
+    write_buffer: '32M'
   },
   mysqld_safe: {
     'open-files-limit' => 8192

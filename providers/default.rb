@@ -41,8 +41,9 @@ end
 
 def configuration_samples
   new_resource.configuration_samples(
-    if new_resource.configuration_samples.nil?
-      node['mysql_tuning']['configuration_samples']
+    if new_resource.configuration_samples.nil?    
+        type = node['mysql_tuning']['type']
+      node['mysql_tuning']['configuration_samples'][type]     
     else
       new_resource.configuration_samples
     end

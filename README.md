@@ -65,7 +65,10 @@ The official MySQL cookbook takes care of adding the *includedir* itself and sho
 
 ## Configured Variables
 
-This cookbook will try to set some variable values depending mainly on the system memory.
+This cookbook will try to set some variable values depending mainly on the system memory. 
+
+By setting node['mysql_tuning']['type'], values will be set by default based on a balanced setting between myisam and innodb, 
+or heavy workload between myisam and innodb configurations.
 
 The following variables will be configured by default inside **tuning.cnf**:
 
@@ -231,6 +234,7 @@ Attributes
 |-----------------------------------------------------|:------------:|-----------------------------------|
 | `node['mysql_tuning']['system_percentage']`         | `100`        | System percentage used for MySQL. Use `100` for MySQL dedicated servers. |
 | `node['mysql_tuning']['dynamic_configuration']`     | `false`      | Tries to change the MySQL configuration without restarting the server, setting variable values dynamically [See above](#dynamic-configuration). |
+| `node['mysql_tuning']['type']`                      | `balanced`   | Values = balanced, myisam, innodb See Above.(#type-configuration). |
 | `node['mysql_tuning']['interpolation']`             | `'proximal'` | Interpolation algorithm to use. Possible values: `'proximal'`, `'linear'`, `'cubic'`, `'bicubic'`, `'catmull'` [See above](#configuration-variables-interpolation). |
 | `node['mysql_tuning']['interpolation_by_variable']` | `{}`         | Use different interpolation algorithms for some variables [See above](#configuration-variables-interpolation). |
 | `node['mysql_tuning']['recipe']`                    | `nil`        | MySQL recipe name, required if not included beforehand. |
